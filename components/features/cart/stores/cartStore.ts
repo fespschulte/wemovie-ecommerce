@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import type { Movie, CartItem } from "@/types/movie";
 
 interface CartState {
@@ -11,60 +12,93 @@ interface CartState {
   getTotalPrice: () => number;
 }
 
-export const cartStore = create<CartState>((set, get) => ({
-  items: [],
+const loadCartFromStorage = (): CartItem[] => {
+  try {
+    if (typeof window === "undefined") return [];
+    const stored = localStorage.getItem("wemovie-cart");
+    return stored ? JSON.parse(stored) : [];
+  } catch (error) {
+    console.warn("Erro ao carregar carrinho do localStorage:", error);
+    return [];
+  }
+};
 
-  addItem: (movie: Movie) => {
-    set((state) => {
-      const existingItem = state.items.find((item) => item.id === movie.id);
+const saveCartToStorage = (items: CartItem[]) => {
+  try {
+    if (typeof window === "undefined") return;
+    localStorage.setItem("wemovie-cart", JSON.stringify(items));
+  } catch (error) {
+    console.warn("Erro ao salvar carrinho no localStorage:", error);
+  }
+};
 
-      if (existingItem) {
-        return {
-          items: state.items.map((item) =>
-            item.id === movie.id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item
-          ),
-        };
-      }
+export const cartStore = create<CartState>()(
+  persist(
+    (set, get) => ({
+      items: loadCartFromStorage(),
 
-      return {
-        items: [...state.items, { ...movie, quantity: 1 }],
-      };
-    });
-  },
+      addItem: (movie: Movie) => {
+        set((state) => {
+          const existingItem = state.items.find((item) => item.id === movie.id);
+          let newItems: CartItem[];
 
-  removeItem: (movieId: number) => {
-    set((state) => ({
-      items: state.items.filter((item) => item.id !== movieId),
-    }));
-  },
+          if (existingItem) {
+            newItems = state.items.map((item) =>
+              item.id === movie.id
+                ? { ...item, quantity: item.quantity + 1 }
+                : item
+            );
+          } else {
+            newItems = [...state.items, { ...movie, quantity: 1 }];
+          }
 
-  updateQuantity: (movieId: number, quantity: number) => {
-    if (quantity <= 0) {
-      get().removeItem(movieId);
-      return;
+          saveCartToStorage(newItems);
+          return { items: newItems };
+        });
+      },
+
+      removeItem: (movieId: number) => {
+        set((state) => {
+          const newItems = state.items.filter((item) => item.id !== movieId);
+          saveCartToStorage(newItems);
+          return { items: newItems };
+        });
+      },
+
+      updateQuantity: (movieId: number, quantity: number) => {
+        if (quantity <= 0) {
+          get().removeItem(movieId);
+          return;
+        }
+
+        set((state) => {
+          const newItems = state.items.map((item) =>
+            item.id === movieId ? { ...item, quantity } : item
+          );
+          saveCartToStorage(newItems);
+          return { items: newItems };
+        });
+      },
+
+      clearCart: () => {
+        set({ items: [] });
+        saveCartToStorage([]);
+      },
+
+      getTotalItems: () => {
+        return get().items.reduce((total, item) => total + item.quantity, 0);
+      },
+
+      getTotalPrice: () => {
+        return get().items.reduce(
+          (total, item) => total + item.price * item.quantity,
+          0
+        );
+      },
+    }),
+    {
+      name: "wemovie-cart-storage",
+      partialize: (state) => ({ items: state.items }),
     }
-
-    set((state) => ({
-      items: state.items.map((item) =>
-        item.id === movieId ? { ...item, quantity } : item
-      ),
-    }));
-  },
-
-  clearCart: () => {
-    set({ items: [] });
-  },
-
-  getTotalItems: () => {
-    return get().items.reduce((total, item) => total + item.quantity, 0);
-  },
-
-  getTotalPrice: () => {
-    return get().items.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
-  },
-}));
+  )
+);
