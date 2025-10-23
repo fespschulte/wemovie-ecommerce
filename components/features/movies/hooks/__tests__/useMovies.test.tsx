@@ -1,6 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { useMovies } from "../useMovies";
 import { movieService } from "../../services/movieService";
+import { Movie } from "../../../../../types/movie";
 
 // Mock do movieService
 jest.mock("../../services/movieService");
