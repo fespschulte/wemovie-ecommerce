@@ -17,7 +17,7 @@ interface PurchaseState {
 
 export const usePurchaseStore = create<PurchaseState>()(
   devtools(
-    (set, get) => ({
+    (set, _get) => ({
       status: "idle",
       purchaseId: undefined,
       error: undefined,

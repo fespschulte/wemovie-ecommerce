@@ -11,8 +11,7 @@ import { CartHeader } from "@/components/features/cart/CartHeader";
 
 export default function CartPage() {
   const { items, totalPrice, isEmpty } = useCartState();
-  const { handleUpdateQuantity, handleRemoveItem, handleClearCart } =
-    useCartActions();
+  const { handleUpdateQuantity, handleRemoveItem } = useCartActions();
   const { isSuccess } = usePurchase();
 
   return (
@@ -28,7 +27,7 @@ export default function CartPage() {
             <>
               <CartHeader />
               <div>
-                {items.map((item, index) => (
+                {items.map((item) => (
                   <div key={item.id}>
                     <CartItem
                       item={item}

@@ -1,7 +1,6 @@
 "use client";
 
 import { usePurchaseStore } from "../stores/purchaseStore";
-import type { CartItem } from "@/types/movie";
 
 export const usePurchase = () => {
   const store = usePurchaseStore();
