@@ -10,7 +10,8 @@ export const EmptyCart: React.FC<EmptyCartProps> = () => {
     <EmptyState
       title="Parece que não há nada por aqui :("
       imageSrc="/not-found.png"
-      buttonText="Voltar para a loja"
+      imageSrcMobile="/not-found-mobile.png"
+      buttonText="Recarregar página"
       onButtonClick={() => (window.location.href = "/")}
     />
   );

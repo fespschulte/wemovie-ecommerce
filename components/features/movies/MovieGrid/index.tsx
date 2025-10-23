@@ -42,6 +42,7 @@ export const MovieGrid: React.FC = () => {
       <EmptyState
         title="Parece que não há nada por aqui :("
         imageSrc="/not-found.png"
+        imageSrcMobile="/not-found-mobile.png"
         buttonText="Recarregar página"
         onButtonClick={() => router.push("/")}
       />
