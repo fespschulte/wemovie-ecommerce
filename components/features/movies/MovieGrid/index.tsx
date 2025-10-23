@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { MovieCard } from "../MovieCard";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { useMovies } from "../hooks/useMovies";
@@ -16,12 +17,13 @@ export const MovieGrid: React.FC = () => {
   if (loading) {
     return (
       <div className="flex min-h-[400px] items-center justify-center">
-        <img
+        <Image
           src="/loader.svg"
           alt="Carregando..."
           width={83}
           height={83}
           className="animate-spin"
+          unoptimized
         />
       </div>
     );

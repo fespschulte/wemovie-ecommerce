@@ -1,4 +1,3 @@
-import React from "react";
 import { renderHook, waitFor } from "@testing-library/react";
 import { useMovies } from "../useMovies";
 import { movieService } from "../../services/movieService";
@@ -95,7 +94,9 @@ describe("useMovies", () => {
 
   it("should handle non-array response", async () => {
     // Arrange
-    mockMovieService.getMovies.mockResolvedValueOnce(null as any);
+    mockMovieService.getMovies.mockResolvedValueOnce(
+      null as unknown as Movie[]
+    );
 
     // Act
     const { result } = renderHook(() => useMovies());

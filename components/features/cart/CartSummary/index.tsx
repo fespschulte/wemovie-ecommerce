@@ -12,7 +12,7 @@ interface CartSummaryProps {
 }
 
 export const CartSummary: React.FC<CartSummaryProps> = ({ totalPrice }) => {
-  const { handlers, state, items } = useCartSummary({
+  const { handlers, state } = useCartSummary({
     totalPrice,
   });
 
