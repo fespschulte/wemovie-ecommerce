@@ -30,11 +30,11 @@ export const CustomButton: React.FC<ButtonProps> = ({
       variant={shadcnVariant}
       className={cn(
         {
-          "bg-primary text-white hover:bg-primary-hover font-bold uppercase":
+          "bg-primary text-white hover:bg-primary-hover font-bold":
             variant === "primary",
-          "bg-gray-100 text-text-primary hover:bg-gray-200 font-bold uppercase":
+          "bg-gray-100 text-text-primary hover:bg-gray-200 font-bold":
             variant === "secondary",
-          "bg-success text-white hover:bg-success-hover font-bold uppercase":
+          "bg-success text-white hover:bg-success-hover font-bold":
             variant === "selected",
         },
         {

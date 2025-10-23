@@ -31,7 +31,7 @@ export const CartSummaryMobile: React.FC<CartSummaryMobileProps> = ({
         disabled={isProcessing}
         className="px-8 w-full text-xs"
       >
-        {isProcessing ? "Processando..." : "Finalizar pedido"}
+        {isProcessing ? "PROCESSANDO..." : "FINALIZAR PEDIDO"}
       </CustomButton>
 
       {isError && (

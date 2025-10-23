@@ -41,7 +41,7 @@ export const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({
               onClick={onConfirm}
               className="bg-red-600 hover:bg-red-700"
             >
-              Excluir
+              EXCLUIR
             </CustomButton>
           </AlertDialogAction>
         </AlertDialogFooter>

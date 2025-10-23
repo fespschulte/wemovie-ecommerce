@@ -65,7 +65,7 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
           />
           <span className="text-xs font-normal">{quantity}</span>
         </div>
-        <span>Adicionar ao Carrinho</span>
+        <span>ADICIONAR AO CARRINHO</span>
       </CustomButton>
     </article>
   );

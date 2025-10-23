@@ -31,7 +31,7 @@ export const CartSummaryDesktop: React.FC<CartSummaryDesktopProps> = ({
         disabled={isProcessing}
         className="px-8 text-sm"
       >
-        {isProcessing ? "Processando..." : "Finalizar pedido"}
+        {isProcessing ? "PROCESSANDO..." : "FINALIZAR PEDIDO"}
       </CustomButton>
 
       {isError && (
