@@ -43,9 +43,8 @@ export const useCartSummary = ({
     try {
       const success = await processPurchase(items, totalPrice);
 
-      // Só limpar carrinho se a compra foi bem-sucedida
       if (success) {
-        handleClearCart(); // Limpar carrinho apenas após sucesso
+        handleClearCart();
       }
     } catch (error) {
       console.error("Erro no checkout:", error);
